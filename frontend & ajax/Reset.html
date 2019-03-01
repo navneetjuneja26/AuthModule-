@@ -1,0 +1,74 @@
+<!doctype.html>
+<html>
+<head><title>RESET PASSWORD</title>
+    <link rel="stylesheet" href="log.css"> 
+     <script  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script> 
+    
+    </head>
+    <script>
+         function ResetPassword(){
+                                                          
+            var passsword = document.getElementById("password").value;
+              var Confirm_Password= document.getElementById("Cf").value;
+              
+            
+        
+        
+        var signUpData = {
+             
+            "Password":passsword,
+            "Confirm_Password":Cf
+        };
+             
+             if(Confirm_Password==passsword)
+                 {
+        
+        $.ajax(
+        {
+            url:'http://localhost:61666/api/Logins',
+            data:signUpData,
+            type:'POST',
+            dataType:'json',
+            success: function(data){
+                console.log(data);
+                alert("Password has been changed");
+            location.replace("Login.html");}
+            
+        }
+            );
+                 }
+             else{
+                 alert("Password & Confirm Password Must be Same");
+             }
+            
+        }
+        
+    
+    
+    </script>
+    <body>
+        <div class='header'>
+        <div class='header-image'>
+            <img src='https://hrms.cygrp.com/content/images/logo.png' class='header-logo'>
+            </div> 
+        
+             
+  <div class="login-page">  
+  <div class="form">
+   
+    <form class="login-form">
+        <h1>Reset your Password.</h1>
+      <input type="text" placeholder="New Password"/>
+      <input type="password" placeholder="Confirm password"/>
+    
+  <button type="submit" onclick="ResetPassword()">Submit</button>
+            
+    
+    </form>
+      </div>
+  </div>
+</div>
+    </body>
+</html>
