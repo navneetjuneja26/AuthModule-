@@ -9,7 +9,6 @@ const express =require('express');
 module.exports = function(passport) {
     passport.use(
         new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-          // Match user 
           var sql = require('mssql');
           const pool = new sql.ConnectionPool({
             user: 'sa',
@@ -26,9 +25,7 @@ module.exports = function(passport) {
                    var q1 = "select password from auth where email = '"+ email+"'";
                    //console.log(q1);
                    request.query(q1, function(err, response){
-                       //console.log("Response : ",response);
                       if(err) console.log(err);
-                      //console.log(response);
                       pass = response.recordset[0].password;
                       //check = pass;
                       bcrypt.compare(password, pass, (err, isMatch) => {
@@ -41,10 +38,10 @@ module.exports = function(passport) {
                                 email:'ankit@gmail.com'
                             }
                             jwt.sign({user},'secretkey',{expiresIn:'1d'},(err,token)=>{
-                                console.log(token);
+                                return token;
                             });
                         } else{
-                            console.log("un success");
+                            return "unsuccessful";
                         }
                       });
                    });
@@ -52,7 +49,7 @@ module.exports = function(passport) {
             //console.log(check); 
         })
       );
-    passport.serializeUser(function(user, done) {
+  /*  passport.serializeUser(function(user, done) {
         done(null, user.email);
       });
     
@@ -60,5 +57,6 @@ module.exports = function(passport) {
         User.findById(id, function(err, user) {
           done(err, user);
         });
-      }); 
+      });
+      */ 
 }

@@ -25,23 +25,29 @@
  }
  
 
-function Login(){
-        $.ajax({
-            
-            url: 'http://localhost:61666/api/Logins/'+$('#uid').val(),
-            type: 'POST',
-            dataType: 'json',
-            success: function(res){
-                if(res.Password==$('#pass').val()) {
-                    // if user loggedin then redirect to home page.
-                   window.location = "dashboard.html";
-                }
-                else{
-                    alert("Incorrect User-ID or password!!!");
-                }
-            }
-        });   
-    }
+function login()
+{
+	var email=document.getElementById('email');
+	var password=document.getElementById('password');
+	
+	var data={
+		
+		"email":email,
+		"password":password
+	};
+	console.log("success bhai");
+	 $.ajax({
+      url: "http://localhost:7000",
+      type: "POST",
+	  datatype:'json',
+	  data:data,
+	  success: function(res){
+		  console.log("success bhai");
+		  window.location='reset.html';
+	  }
+	 });
+   
+}
 
 
 

@@ -3,10 +3,12 @@
 
 <head>
   <title>LOGIN PAGE</title>
-  <link rel="stylesheet" href="log.css">
-     <script  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script> 
+  <link rel="stylesheet" href="/css/log.css">
+  <script
+  src="http://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous">
+</script>
 </head>
 
 <body>
@@ -19,6 +21,7 @@
       <span class="close">&times;</span>
       <p>Check Your Mailbox To Reset Your Password</p>
     </div>
+	
   </div>
   <div class='header'>
     <div class='header-image'>
@@ -32,8 +35,7 @@
         <form class="login-form">
           <input type="email" placeholder="Email" id="email" required/>
           <input type="password" placeholder="password" id ="password" required/>
-<!--          <input style="background-color:green;" type="submit" value="Login">-->
-            <button type="submit" onclick="Login()">Login</button>
+          <input style="background-color:green;" type="submit" value="Login" id="btn1">
           <span>Forgot Password:</span>
           <a id="myBtn" class="continue" href="#">Click To Reset.</a>
         </form>
@@ -43,7 +45,7 @@
   </div>
 
 
-  <script src='main.js'></script>
+  <script src='/js/index.js'></script>
 </body>
 
 </html>
