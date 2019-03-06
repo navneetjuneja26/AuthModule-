@@ -4,16 +4,16 @@
   <head>
     <title>RESET PASSWORD</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/css/log.css">
     <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous">
-    </script>
+      crossorigin="anonymous">
+      </script>
   </head>
 
-  <body onload="start()">
+  <body onload="startBeforeOpenPage()">
 
     <div class='header'>
       <div class='header-image'>
@@ -25,12 +25,12 @@
         <div class="form">
 
           <form class="login-form">
-              <div class="alert alert-warning" id="r1">
-                  <strong>Warning! </strong> Fill all entries.
-                </div>
-                <div class="alert alert-warning" id="r2">
-                    <strong>Warning! </strong> password don't match.
-                  </div>
+            <div class="alert alert-warning" id="r1">
+              <strong>Warning! </strong> Fill all entries.
+            </div>
+            <div class="alert alert-warning" id="r2">
+              <strong>Warning! </strong> password don't match.
+            </div>
             <h1>Reset your Password.</h1>
             <input type="password" placeholder="New Password" id="p1" />
             <input type="password" placeholder="Confirm password" id="p2" />

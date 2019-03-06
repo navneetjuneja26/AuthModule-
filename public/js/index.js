@@ -1,27 +1,3 @@
-// // Get the modal
-
-function show() {
-	console.log("show called");
-	var modal = document.getElementById("myModal");
-
-	// // Get the button that opens the modal
-	var btn = document.getElementById("myBtn");
-
-	// // Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-
-	btn.onclick = function () {
-		modal.style.display = "block";
-	}
-	span.onclick = function () {
-		modal.style.display = "none";
-	}
-	window.onclick = function (event) {
-		if (event.target == modal) {
-			modal.style.display = "none";
-		}
-	}
-}
 
 var token;
 
@@ -30,57 +6,73 @@ function showOnLogin() {
 	document.getElementById("id2").style.display = "none";
 	document.getElementById("id3").style.display = "none";
 	document.getElementById("id4").style.display = "none";
+	document.getElementById("id5").style.display = "none";
+	document.getElementById("id6").style.display = "none";
 }
-
-
 
 // Login Ajax
 var btn = $('#btn1');				// id of button login
 btn.on('click', function (e) {
 	e.preventDefault();
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	//return re.test(email);
 	var email = document.getElementById('email').value;
 	var password = document.getElementById('password').value;
-	if (!email || !password) {
-		console.log("fill all entries");
-		document.getElementById("id1").style.display = "block";
+	if (!re.test(email)) {
+		document.getElementById("id1").style.display = "none";
 		document.getElementById("id2").style.display = "none";
 		document.getElementById("id3").style.display = "none";
 		document.getElementById("id4").style.display = "none";
+		document.getElementById("id5").style.display = "block";
+		document.getElementById("id6").style.display = "none";
 	}
 	else {
-		var data = {
-			"email": email,
-			"password": password
-		};
-		$.ajax({
-			url: 'http://localhost:7000/users/login',
-			type: 'POST',
-			data: data,
-			dataType: 'json',
-			success: function (res) {
-				if (res.message == "no email found") {
-					// flash message 
-					document.getElementById("id1").style.display = "none";
-					document.getElementById("id2").style.display = "block";
-					document.getElementById("id3").style.display = "none";
-					document.getElementById("id4").style.display = "none";
-					console.log("no email");
-				}
-				if (res.message == "token generated successfully") {
-					// flash message 
+		if (!email || !password) {
+			console.log("fill all entries");
+			document.getElementById("id1").style.display = "block";
+			document.getElementById("id2").style.display = "none";
+			document.getElementById("id3").style.display = "none";
+			document.getElementById("id4").style.display = "none";
+			document.getElementById("id5").style.display = "none";
+			document.getElementById("id6").style.display = "none";
+		}
 
-					localStorage.setItem("token", res.token);
-					window.location = "http://localhost:7000/check.html";
+		else {
+			var data = {
+				"email": email,
+				"password": password
+			};
+			$.ajax({
+				url: 'http://localhost:7000/users/login',
+				type: 'POST',
+				data: data,
+				dataType: 'json',
+				success: function (res) {
+					if (res.message == "no email found") {
+						document.getElementById("id1").style.display = "none";
+						document.getElementById("id2").style.display = "block";
+						document.getElementById("id3").style.display = "none";
+						document.getElementById("id4").style.display = "none";
+						document.getElementById("id5").style.display = "none";
+						document.getElementById("id6").style.display = "none";
+					}
+					if (res.message == "token generated successfully") {
+
+						// storing token in the local storage
+						localStorage.setItem("token", res.token);
+						window.location = "http://localhost:7000/check.html";
+					}
+					if (res.message == "id pass donot match") {
+						document.getElementById("id1").style.display = "none";
+						document.getElementById("id2").style.display = "none";
+						document.getElementById("id3").style.display = "block";
+						document.getElementById("id4").style.display = "none";
+						document.getElementById("id5").style.display = "none";
+						document.getElementById("id6").style.display = "none";
+					}
 				}
-				if (res.message == "id pass donot match") {
-					document.getElementById("id1").style.display = "none";
-					document.getElementById("id2").style.display = "none";
-					document.getElementById("id3").style.display = "block";
-					document.getElementById("id4").style.display = "none";
-					console.log("id pass not match");
-				}
-			}
-		});
+			});
+		}
 	}
 })
 
@@ -88,6 +80,7 @@ btn.on('click', function (e) {
 var myBtn = $('#myBtn');
 myBtn.on('click', function (e) {
 	e.preventDefault();
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	var email = document.getElementById("email").value;
 	if (!email) {
 		console.log("fill all entries");
@@ -95,33 +88,51 @@ myBtn.on('click', function (e) {
 		document.getElementById("id2").style.display = "none";
 		document.getElementById("id3").style.display = "none";
 		document.getElementById("id4").style.display = "block";
+		document.getElementById("id5").style.display = "none";
+		document.getElementById("id6").style.display = "none";
 	}
 	else {
-		var data = {
-			"email": email
-		};
-		$.ajax({
-			url: 'http://localhost:7000/users/forget',
-			type: 'POST',
-			data: data,
-			dataType: 'json',
-			success: function (res) {
-				if (res.message == "no email exist") {
-					document.getElementById("id1").style.display = "none";
-					document.getElementById("id2").style.display = "block";
-					document.getElementById("id3").style.display = "none";
-					document.getElementById("id4").style.display = "none";
-				}
-				if (res.message == "mail send") {
-					console.log("mail send");
-					show();
+		if (!re.test(email)) {
+			document.getElementById("id1").style.display = "none";
+			document.getElementById("id2").style.display = "none";
+			document.getElementById("id3").style.display = "none";
+			document.getElementById("id4").style.display = "none";
+			document.getElementById("id5").style.display = "block";
+		}
 
+		else {
+			var data = {
+				"email": email
+			};
+			$.ajax({
+				url: 'http://localhost:7000/users/forget',
+				type: 'POST',
+				data: data,
+				dataType: 'json',
+				success: function (res) {
+					if (res.message == "no email exist") {
+						document.getElementById("id1").style.display = "none";
+						document.getElementById("id2").style.display = "block";
+						document.getElementById("id3").style.display = "none";
+						document.getElementById("id4").style.display = "none";
+						document.getElementById("id6").style.display = "none";
+					}
+					if (res.message == "mail send") {
+						document.getElementById("id1").style.display = "none";
+						document.getElementById("id2").style.display = "none";
+						document.getElementById("id3").style.display = "none";
+						document.getElementById("id4").style.display = "none";
+						document.getElementById("id5").style.display = "none";
+						document.getElementById("id6").style.display = "block";
+
+						console.log("mail send");
+					}
+					if (res.message == "mail not send") {
+						console.log("not send");
+					}
 				}
-				if (res.message == "mail not send") {
-					console.log("not send");
-				}
-			}
-		});
+			});
+		}
 	}
 });
 
@@ -176,7 +187,7 @@ reset.on('click', function (e) {
 })
 
 // function will call when reset page will open to check the session 
-function start() {
+function startBeforeOpenPage() {
 	var getUrlParameter = function getUrlParameter(sParam) {
 		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
 			sURLVariables = sPageURL.split('&'),
@@ -190,19 +201,23 @@ function start() {
 			}
 		}
 	};
-	console.log(getUrlParameter('token'));
 	token = getUrlParameter('token');
-	$.ajax({
-		url: 'http://localhost:7000/users/forgetpassword/' + token,
-		type: 'GET',
-		dataType: 'json',
-		success: function (res) {
-			console.log(res.message);
-			if (res.message == "Session Expired") {
-				window.location.href = "http://localhost:7000";
+	if (!token) {
+		window.location = "http://localhost:7000";
+	}
+	else {
+		$.ajax({
+			url: 'http://localhost:7000/users/forgetpassword/' + token,
+			type: 'GET',
+			dataType: 'json',
+			success: function (res) {
+				console.log(res.message);
+				if (res.message == "Session Expired") {
+					window.location.href = "http://localhost:7000";
+				}
 			}
-		}
-	});
+		});
+	}
 	document.getElementById("r1").style.display = "none";
 	document.getElementById("r2").style.display = "none";
 }
