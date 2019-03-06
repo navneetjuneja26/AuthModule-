@@ -98,9 +98,9 @@ router.post('/forget', (req, res) => {
 
                         // using sendgrid for sending email
                         const sgMail = require('@sendgrid/mail');
-                        //sgMail.setApiKey(config.get('apiKey'));
+                        sgMail.setApiKey(config.get('apiKey'));
                         //console.log(config.get('apiKey'));
-                        sgMail.setApiKey('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');
+                        
                         const msg = {
                             to: email,
                             from: 'rishabhsinghalrishabh@gmail.com',
