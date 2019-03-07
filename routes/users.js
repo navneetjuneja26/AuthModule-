@@ -4,17 +4,23 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const config = require('config');
+var sql = require('mssql');
 
-// route to handle login
-router.post('/login', (req, res, next) => {
-    var { email, password } = req.body;
-    var sql = require('mssql');
+// function to built connection
+function connection() {
     const pool = new sql.ConnectionPool({
         user: 'sa',
         password: 'abcd',
         server: 'DESKTOP-VOMOOC8',
         database: 'auth'
     })
+    return pool;
+}
+
+// route to handle login
+router.post('/login', (req, res, next) => {
+    var { email, password } = req.body;
+    var pool = connection();
     var conn = pool;
     conn.connect().then(function (err) {
         var request = new sql.Request(conn);
@@ -31,7 +37,6 @@ router.post('/login', (req, res, next) => {
                 // using bcrypt to compare hashed password and entered password
                 bcrypt.compare(password, pass, (err, isMatch) => {
                     if (err) { console.log(err); }
-
                     if (isMatch) {
 
                         // generating data to store in token
@@ -41,7 +46,7 @@ router.post('/login', (req, res, next) => {
                         }
 
                         // generating token
-                        jwt.sign({ user }, 'secretkey', { expiresIn: '1d' }, (err, token) => {
+                        jwt.sign({ user }, config.get('tokenKey'), { expiresIn: '1d' }, (err, token) => {
                             var dataToSend = {
                                 "message": "token generated successfully",
                                 "token": token
@@ -67,13 +72,7 @@ router.post('/forget', (req, res) => {
         if (err) { console.log(err); }
         token = buffer.toString('hex');
     });
-    var sql = require('mssql');
-    const pool = new sql.ConnectionPool({
-        user: 'sa',
-        password: 'abcd',
-        server: 'DESKTOP-VOMOOC8',
-        database: 'auth'
-    });
+    var pool = connection();
     var conn = pool;
     conn.connect().then(function (err) {
         if (err) console.log(err);
@@ -99,8 +98,6 @@ router.post('/forget', (req, res) => {
                         // using sendgrid for sending email
                         const sgMail = require('@sendgrid/mail');
                         sgMail.setApiKey(config.get('apiKey'));
-                        //console.log(config.get('apiKey'));
-                        
                         const msg = {
                             to: email,
                             from: 'rishabhsinghalrishabh@gmail.com',
@@ -182,13 +179,7 @@ router.post('/updatepassword', (req, res) => {
                     if (err) throw err;
                     newpassword = hash;
 
-                    var sql = require('mssql');
-                    const pool = new sql.ConnectionPool({
-                        user: 'sa',
-                        password: 'abcd',
-                        server: 'DESKTOP-VOMOOC8',
-                        database: 'auth'
-                    })
+                    var pool = connection();
 
                     var conn = pool;
                     conn.connect().then(function (err) {

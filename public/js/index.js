@@ -1,6 +1,7 @@
-
+//localStorage.setItem("TokenExpire","none");
 var token;
 
+// function call when login page will appear
 function showOnLogin() {
 	document.getElementById("id1").style.display = "none";
 	document.getElementById("id2").style.display = "none";
@@ -8,6 +9,19 @@ function showOnLogin() {
 	document.getElementById("id4").style.display = "none";
 	document.getElementById("id5").style.display = "none";
 	document.getElementById("id6").style.display = "none";
+	document.getElementById("id7").style.display = "none";
+	document.getElementById("id8").style.display = "none";
+	var check = localStorage.getItem("TokenExpire");
+	if (check == "yes") {
+		document.getElementById("id7").style.display = "block";
+		localStorage.setItem("TokenExpire", "none");
+	}
+	else {
+		if (check == "error") {
+			document.getElementById("id8").style.display = "block";
+			localStorage.setItem("TokenExpire", "none");
+		}
+	}
 }
 
 // Login Ajax
@@ -25,6 +39,8 @@ btn.on('click', function (e) {
 		document.getElementById("id4").style.display = "none";
 		document.getElementById("id5").style.display = "block";
 		document.getElementById("id6").style.display = "none";
+		document.getElementById("id7").style.display = "none";
+		document.getElementById("id8").style.display = "none";
 	}
 	else {
 		if (!email || !password) {
@@ -35,6 +51,8 @@ btn.on('click', function (e) {
 			document.getElementById("id4").style.display = "none";
 			document.getElementById("id5").style.display = "none";
 			document.getElementById("id6").style.display = "none";
+			document.getElementById("id7").style.display = "none";
+			document.getElementById("id8").style.display = "none";
 		}
 
 		else {
@@ -55,6 +73,8 @@ btn.on('click', function (e) {
 						document.getElementById("id4").style.display = "none";
 						document.getElementById("id5").style.display = "none";
 						document.getElementById("id6").style.display = "none";
+						document.getElementById("id7").style.display = "none";
+						document.getElementById("id8").style.display = "none";
 					}
 					if (res.message == "token generated successfully") {
 
@@ -69,6 +89,8 @@ btn.on('click', function (e) {
 						document.getElementById("id4").style.display = "none";
 						document.getElementById("id5").style.display = "none";
 						document.getElementById("id6").style.display = "none";
+						document.getElementById("id7").style.display = "none";
+						document.getElementById("id8").style.display = "none";
 					}
 				}
 			});
@@ -90,6 +112,8 @@ myBtn.on('click', function (e) {
 		document.getElementById("id4").style.display = "block";
 		document.getElementById("id5").style.display = "none";
 		document.getElementById("id6").style.display = "none";
+		document.getElementById("id7").style.display = "none";
+		document.getElementById("id8").style.display = "none";
 	}
 	else {
 		if (!re.test(email)) {
@@ -98,6 +122,8 @@ myBtn.on('click', function (e) {
 			document.getElementById("id3").style.display = "none";
 			document.getElementById("id4").style.display = "none";
 			document.getElementById("id5").style.display = "block";
+			document.getElementById("id7").style.display = "none";
+			document.getElementById("id8").style.display = "none";
 		}
 
 		else {
@@ -116,6 +142,8 @@ myBtn.on('click', function (e) {
 						document.getElementById("id3").style.display = "none";
 						document.getElementById("id4").style.display = "none";
 						document.getElementById("id6").style.display = "none";
+						document.getElementById("id7").style.display = "none";
+						document.getElementById("id8").style.display = "none";
 					}
 					if (res.message == "mail send") {
 						document.getElementById("id1").style.display = "none";
@@ -124,7 +152,8 @@ myBtn.on('click', function (e) {
 						document.getElementById("id4").style.display = "none";
 						document.getElementById("id5").style.display = "none";
 						document.getElementById("id6").style.display = "block";
-
+						document.getElementById("id7").style.display = "none";
+						document.getElementById("id8").style.display = "none";
 						console.log("mail send");
 					}
 					if (res.message == "mail not send") {
@@ -150,7 +179,6 @@ reset.on('click', function (e) {
 		document.getElementById("r2").style.display = "none";
 	}
 	else {
-		console.log("second part");
 		if (pass != password) {
 			console.log("password dont match");
 			document.getElementById("r1").style.display = "none";
@@ -203,7 +231,10 @@ function startBeforeOpenPage() {
 	};
 	token = getUrlParameter('token');
 	if (!token) {
+		count = 0;
+		localStorage.setItem("TokenExpire", "error");
 		window.location = "http://localhost:7000";
+		//document.getElementById("id7").style.display = "block";
 	}
 	else {
 		$.ajax({
@@ -213,7 +244,14 @@ function startBeforeOpenPage() {
 			success: function (res) {
 				console.log(res.message);
 				if (res.message == "Session Expired") {
+					localStorage.setItem("TokenExpire", "yes");
 					window.location.href = "http://localhost:7000";
+				}
+				else {
+					if (res.message == "no email") {
+						localStorage.setItem("TokenExpire", "error");
+						window.location.href = "http://localhost:7000";
+					}
 				}
 			}
 		});
