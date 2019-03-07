@@ -11,8 +11,7 @@ app.use(function (req, res, next) {
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/views'));
-// Passport Config
-require('./config/passport')(passport);
+
 
 // BodyParser
 app.use(express.urlencoded({ extended: false }));
@@ -23,7 +22,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Routes
-app.use('/index', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.get('/', (req, res) => {
     res.sendFile('/views/Login.html', { root: __dirname });

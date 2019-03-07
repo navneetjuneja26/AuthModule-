@@ -1,38 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <title>LOGIN PAGE</title>
-  <link rel="stylesheet" href="/css/log.css">
   <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
     crossorigin="anonymous">
     </script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/log.css">
 </head>
 
-<body>
+<body onload="showOnLogin()">
 
-  <!-- The Modal -->
-  <div id="myModal" class="modal">
+    <div class="alert alert-success" id="id6">
+        <strong>Success!</strong> Please Check Your Mailbox to reset password.
+      </div>
 
-    <!-- Modal content -->
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <p>Check Your Mailbox To Reset Your Password</p>
-    </div>
 
-  </div>
+
   <div class='header'>
     <div class='header-image'>
       <img src='https://hrms.cygrp.com/content/images/logo.png' class='header-logo'>
     </div>
 
     <div class="login-page">
+
+
       <div class="form">
+        <div class="alert alert-warning" id="id1">
+          <strong>Warning! </strong> Fill all entries.
+        </div>
+        <div class="alert alert-warning" id="id2">
+          <strong>Warning! </strong> No Account found with this email.
+        </div>
+        <div class="alert alert-warning" id="id3">
+          <strong>Warning! </strong> credentials do not match.
+        </div>
+        <div class="alert alert-warning" id="id4">
+            <strong>Warning! </strong> please enter email.
+          </div>
+          <div class="alert alert-warning" id="id5">
+              <strong>Warning! </strong> please enter valid email.
+            </div>
         <h1>Login to your Account.</h1>
 
         <form class="login-form">
-          <input type="email" placeholder="Email" id="email" required />
-          <input type="password" placeholder="password" id="password" required />
+          <input type="email" placeholder="Email" id="email" required>
+          <input type="password" placeholder="password" id="password" required>
           <input style="background-color:green;" type="submit" value="Login" id="btn1">
           <span>Forgot Password:</span>
           <a id="myBtn" class="continue" href="#">Click To Reset.</a>
